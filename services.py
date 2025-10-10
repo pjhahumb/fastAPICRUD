@@ -1,26 +1,9 @@
 from models import Book
-from sqlalchemy.orm import Session
 from schemas import BookCreate
-
+from sqlalchemy.orm import Session
 def create_book(db:Session, data:BookCreate):
     book_instance = Book(**data.model_dump())
     db.add(book_instance)
     db.commit()
     db.refresh(book_instance)
     return book_instance
-
-def get_books(db:Session):
-    return db.query(Book).all()
-
-def update_book(db:Session, book:BookCreate, book_id:int):
-    book_queryset = db.query(Book).filter(Book.id==book_id).first()
-    if book_queryset:
-        for key, value in book.model_dump().items():
-            setattr(book_queryset, key, value)
-        db.commit()
-        db.refresh(book_queryset)
-    return book_queryset
-
-def delete_book(db:Session, book_id:int):
-    db.query(Book).filter(Book.id==book_id).delete()
-    db.commit()
