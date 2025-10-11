@@ -1,18 +1,15 @@
 from pydantic import BaseModel
 
-class BookBase(BaseModel):
+class Bookbase(BaseModel):
     title:str
-    description:str
     author:str
+    desc:str
     year:int
 
-class BookCreate(BookBase):
+class Bookcreate(Bookbase):
     pass
 
-class Book(BookBase):
+class Book(Bookbase):
     id:int
-
-    # to serialize the data
     class config:
-        # orm_mode = True pydantic version <2
-        form_attributes = True    
+        form_attributes=True
