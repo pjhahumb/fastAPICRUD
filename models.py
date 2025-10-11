@@ -1,8 +1,8 @@
-from db import Base
+from db import base
 from sqlalchemy import String, Integer, Column
 
-class BookModel(Base):
-    __tablename__ = 'Books'
+class BookModel(base):
+    __tablename__ = 'Book'
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     author = Column(String, index=True)

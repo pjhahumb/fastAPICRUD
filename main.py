@@ -1,16 +1,15 @@
 from fastapi import FastAPI, Depends
-from schemas import Bookcreate
+from schemas import Book, Create_Book
 from sqlalchemy.orm import Session
 from db import get_db
-from services import insert_book, get_all_book
+from services import create_book, get_books
 
 app = FastAPI()
 
-@app.post('/create', response_model=Bookcreate)
-async def store_book(data:Bookcreate, db:Session=Depends(get_db)):
-    return insert_book(db, data)
+@app.post('/create', response_model=Book)
+async def create(data:Create_Book, db:Session=Depends(get_db)):
+   return create_book(db,data)
 
-@app.post('/get_boooks', response_model=list[Bookcreate])
-async def get_book(db:Session=Depends(get_db)):
-    return get_all_book(db)
-
+@app.get('/get_books', response_model=list[Book])
+async def get(db:Session=Depends(get_db)):
+   return get_books(db)
